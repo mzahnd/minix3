@@ -21,15 +21,13 @@ qemu-system-x86_64 -net user -net nic -m 256 -drive file=minix.img,format=raw
 ~~~
 
 Once inside your Minix VM, install the basic tools and OpenSSH to access it from a shell in your host machine.
-~~~
+~~~sh
 echo export TZ=America/Buenos_Aires > /etc/rc.timezone
 pkgin update
 pkgin install openssh git-base binutils clang vim
 passwd # Set root password (needed for SSH)
 reboot
 ~~~
-
-pass: root123
 
 We can now use SSH to control our Minix VM:
 ~~~bash
