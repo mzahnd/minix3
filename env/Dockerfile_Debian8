@@ -1,0 +1,61 @@
+# Build and run:
+#   docker build . -t itba-so-tp3-grupo11:1.0 -f Dockerfile
+# stop:
+#   docker stop so-tp3-grupo11
+#
+
+FROM agodio/itba-so:1.0
+RUN mkdir /minix3
+RUN mkdir /minix3/src
+VOLUME /minix3
+WORKDIR /minix3/src
+
+# COLORS !!
+# gcc
+ENV GCC_COLORS="error=01;31:warning=01;35:note=01;36:range1=32:range2=34:locus=01:\
+quote=01:path=01;36:fixit-insert=32:fixit-delete=31:\
+diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:\
+type-diff=01;32"
+
+# ls
+RUN echo 'alias ls="ls --color=auto"' >> /etc/bash.bashrc
+
+RUN DEBIAN_FRONTEND="noninteractive" \
+    apt install --force-yes -y \
+    apt-transport-https \
+    && apt update \
+    && apt install --force-yes -y tzdata \
+        apt-transport-https \
+        ca-certificates \
+        libcurl3-gnutls
+
+RUN apt update \
+    && apt install -y --force-yes cmake \
+        build-essential \
+        clang \
+        g++\
+        gdb \
+        curl \
+        git \
+        zlibc \
+        zlib1g \
+        zlib1g-dev \
+        ninja-build \
+        autoconf \
+        automake \
+        locales-all \
+        tar
+
+RUN yes password | passwd
+
+RUN ln -s -t /etc/ /minix3/src/etc/mk.conf
+RUN ln -s -t /usr/share/ /minix3/src/share/mk/
+
+# RUN ( echo 'LogLevel DEBUG2'; \
+#     echo 'PermitRootLogin yes'; \
+#     echo 'PasswordAuthentication yes'; \
+#     echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
+#   ) > /etc/ssh/sshd_config_clion \
+#   && mkdir /run/sshd
+
+# CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_clion"]
