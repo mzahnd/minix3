@@ -1,5 +1,8 @@
 # Getting MINIX 3 image
 
+If you want to build Minix v3.3.0 from sources, check
+[build_v3.3.0 branch](https://github.com/mzahnd/minix3/tree/build_v3.3.0).
+
 ~~~bash
 # Get the ISO image
 curl --remote-name  http://download.minix3.org/iso/minix_R3.3.0-588a35b.iso.bz2
